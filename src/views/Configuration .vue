@@ -12,11 +12,11 @@
         <h3 class="h3">分拣线配置</h3>
         <div id="Box">
             <el-row class="elRow">
-                <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="17" class="elCol">
+                <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="17" class="elCol elCol0">
                     <div id="scrollBox" ref="scrollBox">
                         <div id="divBox">
                             <div class="canvasBox" ref="divBox" @click="deleteLine($event)">
-                                <span class="portOP">端口关系配置</span>
+                                <h3 class="portOP">端口关系配置</h3>
                                 <div class="Classification" ref="divs" v-for="item,key,i in allBox" :id="key">
                                     <h1>{{item.name}}</h1>
                                     <div class="portBox" v-for="(c, x) in item.value" :key="x" ref="portBox">
@@ -39,10 +39,12 @@
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="6" class="elCol elCol1">
                     <div id="portMesg">
-
+                      <div>
+                        <h3 class="portOP">端口属性</h3>
+                      </div>
                         <el-tabs v-model="activeName" @tab-click="handleClick">
 
-                            <el-tab-pane v-for="(item,key, index) in allBox" :key="item.key" :label="item.name" :name="key">
+                            <el-tab-pane v-for="(item,key, index) in allBox" :key="item.key" :name="key">
                                 {{key}}
                                 <formCop :tabKey="key" />
 
@@ -171,11 +173,11 @@ export default class Home extends Vue {
   startPort: any;
   endPort: any;
   ports: any;
-  ports1:any;
+  ports1: any;
   updated() {
     this.portBox = this.$refs.portBox;
     console.log(this.portBox);
-    console.log(this.ports1,'222222222222222222222222222');
+    console.log(this.ports1, "222222222222222222222222222");
     this.portBoxs = [];
 
     if (this.drow) {
@@ -273,17 +275,16 @@ export default class Home extends Vue {
       flag.push(false);
     } else {
       flag.push(true);
+
     }
     if (startPort.type === "upLoad" || startPort.type === "initialSort") {
       for (let i in typeList) {
         if (startPort.id === typeList[i].sid) {
-          console.log(typeList[i], "333333333333333333333333");
+          // console.log(typeList[i], "333333333333333333333333");
           flag.push(true);
         }
       }
     }
-    // console.log(flag);
-    // console.log(flag.indexOf(true));
     if (flag.indexOf(true) < 0 && startPort.id !== endPort.id) {
       //如果将要链接的两个端口的ID组成的数组不存在，则执行画线方法，否则不执行；
       // this.endDrow(p, XY, null, endId);
@@ -297,6 +298,8 @@ export default class Home extends Vue {
       console.log("画线条件不正确");
     } else if (startPort.id === endPort.id) {
       console.log("此链接无效");
+    }else {
+
     }
     // console.log(data);
     console.log("up---");
@@ -650,15 +653,15 @@ export default class Home extends Vue {
     let oe = e || event;
     // console.log(oe.currentTarget.children[1].innerText);
     let portBox = this.portBox;
-    for(let i in portBox) { //给当前点击的端口添加class
-      if(portBox[i].childNodes[0].id === id) {
+    for (let i in portBox) {
+      //给当前点击的端口添加class
+      if (portBox[i].childNodes[0].id === id) {
         e.currentTarget.classList.add("active");
-      }else {
-        portBox[i].childNodes[0].classList.remove('active')
+      } else {
+        portBox[i].childNodes[0].classList.remove("active");
       }
-      
     }
-    
+
     // console.log(key, id);
     this.activeName = key;
     let data = {
@@ -688,8 +691,8 @@ export default class Home extends Vue {
   #Box {
     width: 100%;
     height: 90%;
-    border: 1px solid #ccc;
     #portMesg {
+      position: relative;
       width: 100%;
       display: inline-block;
     }
@@ -699,8 +702,12 @@ export default class Home extends Vue {
       height: 100%;
     }
     .elRow {
+      .elCol0 {
+        border: 0.5px solid #ccc;
+      }
       .elCol1 {
         min-width: 350px;
+        border: 0.5px solid #ccc;
       }
     }
   }
@@ -716,7 +723,6 @@ export default class Home extends Vue {
     // max-width: 800px;
     // min-width: 600px;
     height: 100%;
-    border: 1px solid #ccc;
     z-index: 0;
     overflow: hidden;
   }
@@ -724,24 +730,14 @@ export default class Home extends Vue {
     // position: absolute;
     width: 102%;
     height: 103%;
-    margin: -17px 0 0 0;
-    padding: 17px 0 45px 0;
+    margin: -12px 0 0 0;
+    padding: 12px 0 45px 0;
     overflow: scroll;
     .canvasBox {
       position: relative;
       display: flex;
       padding: 50px 0 20px 0;
       min-width: 800px;
-
-      .portOP {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 130px;
-        height: 40px;
-        line-height: 40px;
-        background: #f5f1f1;
-      }
     }
 
     .Classification {

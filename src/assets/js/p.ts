@@ -27,3 +27,59 @@ export const equals = (a: any, array: any) => {
 };
 // Hide method from for-in loops
 Object.defineProperty(Array.prototype, "equals", { enumerable: false });
+
+export const validate = (rule: any, value: any, callback: any) => {
+    // console.log(rule, value);
+    if (rule.field === "portName") {
+      if (value === "") {
+        callback(new Error("请输入端口名称"));
+      } else {
+        callback();
+      }
+    } else if (rule.field === "effectiveTo") {
+      if (value === "") {
+        callback(new Error("请选择日期"));
+      } else {
+        callback();
+      }
+    } else if (rule.field === "flowThd") {
+      // console.log(value);
+      if (value === "") {
+        callback(new Error("请输入流量阈值"));
+      } else {
+        callback();
+      }
+    } else if (rule.field === "flowWarnCount") {
+      // console.log(value);
+      if (value === "") {
+        callback(new Error("请输入流量阈值"));
+      } else {
+        callback();
+      }
+    } else if (rule.field === "transportThd") {
+      // console.log(value);
+      if (value === "") {
+        callback(new Error("请输入货量阈值"));
+      } else {
+        callback();
+      }
+    } else if (rule.field === "outcontractCount") {
+      if (value === "") {
+        callback(new Error("请输入外包人数"));
+      } else {
+        callback();
+      }
+    } else if (rule.field === "outlendCount") {
+      if (value === "") {
+        callback(new Error("请输入外请人数"));
+      } else {
+        callback();
+      }
+    }else if (rule.field === "www") {
+        if (value === "") {
+          callback(new Error("请输入对应路线"));
+        } else {
+          callback();
+        }
+      }
+  };

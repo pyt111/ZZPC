@@ -67,6 +67,7 @@ import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 @Component
 export default class upLoad extends Vue {
   @Prop() keys: string;
+  @State(state => state.element.rules) rules:any
   @Getter("nowPort") nowPort: any;
   @Getter("allBox") allBox: any;
   @Getter("nowKey") nowKey: any;
@@ -74,6 +75,7 @@ export default class upLoad extends Vue {
   @Getter("lineList") lineList: any;
   @Action("getPortInfoFun") getPortInfoFun: any;
   @Mutation("newNameFun") newNameFun: any;
+  @Mutation("dataFun") dataFun: any;
 
   data: any = {
     portId: '',
@@ -139,67 +141,8 @@ export default class upLoad extends Vue {
   //     console.log(this.generateData());
   //     return this.generateData();
   // }
-  validate = (rule: any, value: any, callback: any) => {
-    // console.log(rule, value);
-    if (rule.field === "portName") {
-      if (value === "") {
-        callback(new Error("请输入端口名称"));
-      } else {
-        callback();
-      }
-    } else if (rule.field === "effectiveTo") {
-      if (value === "") {
-        callback(new Error("请选择日期"));
-      } else {
-        callback();
-      }
-    } else if (rule.field === "flowThd") {
-      // console.log(value);
-      if (value === "") {
-        callback(new Error("请输入流量阈值"));
-      } else {
-        callback();
-      }
-    } else if (rule.field === "flowWarnCount") {
-      // console.log(value);
-      if (value === "") {
-        callback(new Error("请输入流量阈值"));
-      } else {
-        callback();
-      }
-    } else if (rule.field === "transportThd") {
-      // console.log(value);
-      if (value === "") {
-        callback(new Error("请输入货量阈值"));
-      } else {
-        callback();
-      }
-    } else if (rule.field === "outcontractCount") {
-      if (value === "") {
-        callback(new Error("请输入外包人数"));
-      } else {
-        callback();
-      }
-    } else if (rule.field === "outlendCount") {
-      if (value === "") {
-        callback(new Error("请输入外请人数"));
-      } else {
-        callback();
-      }
-    }
-  };
-  rules = {
-    portName: [{ validator: this.validate, trigger: "blur" }],
-    effectiveTo: [{ validator: this.validate, trigger: "blur" }],
-    downloadFlag: [
-      { required: true, message: "请选择是否即卸", trigger: "change" }
-    ],
-    flowThd: [{ validator: this.validate, trigger: "blur" }],
-    flowWarnCount: [{ validator: this.validate, trigger: "blur" }],
-    transportThd: [{ validator: this.validate, trigger: "blur" }],
-    outlendCount: [{ validator: this.validate, trigger: "blur" }],
-    outcontractCount: [{ validator: this.validate, trigger: "blur" }]
-  };
+  
+
   // @Watch("getNowKey")
   // aab(val: string, oldVal: string) {
   //     // console.log(this.getNowKey);
@@ -284,26 +227,13 @@ export default class upLoad extends Vue {
     console.log(list);
   }
   submitForm(formName: any) {
-    this.data.portId = this.nowPort;
     formName = this.$refs[formName] as Element;
     console.log(this.data);
+    this.dataFun(this.data);
+    this.$emit("sub", formName);
     // console.log(this.nowKey);
     // console.log(this.lineList);
-    this.data.porttypeId = this.nowKey;
-    let upData = {} as any;
-    // console.log(this.lineList,'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-    upData.portRel = JSON.stringify(this.allBox); //所有关联端口的关系数组
-    upData.port = JSON.stringify([this.data]);
-    formName.validate((valid: any) => {
-      // console.log(this.data, "wwwwwwwwwwww");
-      if (valid) {
-        this.$store.dispatch("lineDataFun", upData);
-        alert("submit!");
-      } else {
-        console.log("error submit!!");
-        return false;
-      }
-    });
+    
   }
 }
 </script>

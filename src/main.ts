@@ -5,6 +5,7 @@ import store from "./store";
 import "./registerServiceWorker";
 // import Icon from "vue2-svg-icon/Icon.vue";
 import "@/assets/css/element.css";
+import "@/assets/css/baseCss.css";
 import vueMethods from '@/assets/js/vueMethods.ts';
 Vue.use(vueMethods, {
     someOption: true
