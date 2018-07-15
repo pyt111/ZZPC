@@ -1,0 +1,72 @@
+.el-transfer-panel {
+    width: 40%;
+}
+
+.el-transfer-panel .el-transfer-panel__footer {
+    height: 70px;
+}
+
+.el-button+.el-button {
+    margin-left: 0;
+}
+
+.el-button--primary.is-disabled,
+.el-button--primary.is-disabled:active,
+.el-button--primary.is-disabled:focus,
+.el-button--primary.is-disabled:hover {
+    display: block;
+    /* width: 15px; */
+}
+
+.el-transfer__buttons {
+    padding: 0 10px;
+}
+
+.el-checkbox {
+    text-align: left;
+    padding-left: 5px;
+}
+
+.el-transfer-panel__filter {
+    width: 80%;
+}
+
+.el-transfer-panel__list.is-filterable {
+    width: 107%;
+    height: 100%;
+}
+
+.difs1 .el-form-item__content {
+    width: 100%;
+    margin-left: 0 !important;
+    display: inline-block;
+}
+
+    .demo-ruleForm {
+    }
+    .transfer {
+        margin-bottom: 10px;
+    }
+    .submit {
+        float: left;
+        margin-left: 20px;
+    }
+    .difs {
+        width: 45%;
+        float: left;
+    }
+   
+    .rFooter {
+        font-size: 12px;
+        height: 10px;
+        width: 5px;
+        line-height: 4;
+        transform: scale(0.9);
+        -webkit-transform: scale(0.9);
+        -moz-transform: scale(0.9);
+    }
+    .radios {
+        position: absolute;
+        left: 0;
+        top: 8px;
+    }
