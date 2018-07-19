@@ -20,13 +20,32 @@ export const router = new Router({
         }
     ]
 });
+
+
+
+//获取url中的参数
+function getQueryVariable(variable:any) {
+    let query = window.location.search.substring(1);
+    let vars = query.split("&");
+    for (let i = 0; i < vars.length; i++) {
+      let pair = vars[i].split("=");
+      if (pair[0] == variable) {
+        return pair[1];
+      }
+    }
+    return ('');
+  }
  router.beforeEach((to, from, next) => {
     console.log(to,'22222222222222222222222222');
-    let userCode = store.state.code.userCode;
+    let orgCode = store.state.code.orgCode;
     let pickingLineCode = store.state.code.pickingLineCode;
-    console.log(userCode,pickingLineCode);
-    if(userCode === ''|| pickingLineCode === '') {
-       
+    console.log(orgCode,pickingLineCode);
+    if(orgCode === ''|| pickingLineCode === '') {
+      let orgCode = getQueryVariable('orgCode');
+      let pickingLineCode =getQueryVariable('pickingLineCode');
+      store.commit('getOrgCode', orgCode); //获取orgCode并缓存到全局
+      store.commit('getPickingLineCode', pickingLineCode); //获取sessionId并缓存到全局
+    //    console.log('999999999999999999999999999999999999999');
     }
      next()
 });

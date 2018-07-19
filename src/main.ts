@@ -13,6 +13,7 @@ Vue.use(vueMethods, {
 // import jsPlumb from "jsplumb";
 import {
     Button,
+    Dialog,
     Option,
     OptionGroup,
     Select,
@@ -27,6 +28,7 @@ import {
     Transfer,
     Radio,
   RadioGroup,
+  Loading
   
 } from "element-ui";
 // import vueMethods  from  "./assets/js/vueMethods";
@@ -41,7 +43,9 @@ Vue.config.productionTip = false;
 // Vue.use(vueMethods, {
 //     someOption: true
 //   });
+Vue.prototype.$loading = Loading.service;
 Vue.use(Button);
+Vue.use(Dialog);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(OptionGroup);

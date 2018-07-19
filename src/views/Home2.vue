@@ -41,7 +41,7 @@
                         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="90px" class="demo-ruleForm">
 
                             <div v-show="item.portDesc === '上货'">
-                                <el-form-item label="活动名称:" prop="name">
+                                <el-form-item label="端口名称:" prop="name">
                                     <el-input v-model="ruleForm.name"></el-input>
                                 </el-form-item>
                                 <el-form-item label="有效期至:" prop="date">

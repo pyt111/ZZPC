@@ -39,15 +39,28 @@ function getQueryVariable(url: string, variable: any) {
 service.interceptors.request.use(
     config => {
         if (config.method === "post") {
+          
             let data = qs.parse(config.data);
+            let orgCode = store.state.code.orgCode || "W3100020616" ;
+            let pickingLineCode = store.state.code.pickingLineCode || "TEST01";
+            // console.log(orgCode);
             config.data = qs.stringify({
-                userCode: "",
-                orgCode: "W3100020616",
-                pickingLineCode: "TEST01",
+                // userCode: "",
+                orgCode: orgCode,
+                pickingLineCode: pickingLineCode,
                 door: "door",
                 ...data
             });
-        } // Do something before request is sent
+        }else if (config.method === 'get') {
+            let orgCode = store.state.code.orgCode || "W3100020616" ;
+            let pickingLineCode = store.state.code.pickingLineCode || "TEST01";
+            config.params = {
+                orgCode: orgCode,
+                pickingLineCode: pickingLineCode,
+                door: "door",
+              ...config.params
+            }
+          } // Do something before request is sent
         if (store.getters.token) {
             config.headers["X-Token"] = store.getters.token; // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
             // config.headers.Authorization = store.getters.token;
@@ -138,10 +151,37 @@ export const get = (url: string, param: any) => {
             method: "get",
             url,
             params: param
-            // cancelToken: new CancelToken(c => {
-            //     cancel = c
-            // })
-        }).then(res => {});
+        }).then(res => {
+            // console.log(res,'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+            if (res.data != "") {
+                //判断返回数据是否加密 如果加密则数据为字符串
+                if (res.data.statusCode == 200) {
+                    // setTimeout(() => resolve(res.data), 5000);
+                    //   console.log('11111111111111111111111111111111111111111111111111111');
+                    resolve(res.data);
+                } else {
+                    console.log(res,'----------error----------');
+                    let err = {
+                        url: res.config.url,
+                        // data: res.config.data,
+                        msg: res.data.message
+                    };
+                    reject(err);
+                }
+            } else if (typeof res.data == "string" && res.data != "") {
+
+            } else if (typeof res.data == "string") {
+                //   console.log('sssssssssssssssssssss');
+                let err = {
+                    message: "服务器响应失败"
+                };
+                reject(err);
+            }
+        }).catch(err => {
+                // console.log('eqqqqqqqqqeeeeeeeeeeee');
+                // setTimeout(() => resolve(err + 200), 5000);
+                reject(err);
+            });;
     });
 };
 //post请求
@@ -166,6 +206,7 @@ export const post = (url: any, data: any) => {
                 if (res.data != "") {
                     //判断返回数据是否加密 如果加密则数据为字符串
                     if (res.data.statusCode == 200) {
+                        // setTimeout(() => resolve(res.data), 5000);
                         //   console.log('11111111111111111111111111111111111111111111111111111');
                         resolve(res.data);
                     } else {
@@ -173,7 +214,7 @@ export const post = (url: any, data: any) => {
                         let err = {
                             url: res.config.url,
                             // data: res.config.data,
-                            msg:res.data.message
+                            msg: res.data.message
                         };
                         reject(err);
                     }
@@ -196,6 +237,7 @@ export const post = (url: any, data: any) => {
             })
             .catch(err => {
                 // console.log('eqqqqqqqqqeeeeeeeeeeee');
+                // setTimeout(() => resolve(err + 200), 5000);
                 reject(err);
             });
     });

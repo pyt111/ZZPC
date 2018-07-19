@@ -1,6 +1,6 @@
-(Date.prototype as any).Format = function(fmt:any) {
+(Date.prototype as any).Format = function(fmt: any) {
     //author: meizz
-    let o:any = {
+    let o: any = {
         "M+": this.getMonth() + 1, //月份
         "d+": this.getDate(), //日
         "h+": this.getHours(), //小时
@@ -26,7 +26,7 @@
 };
 export default {
     install: (Vue: any, opt: any) => {
-        Vue.prototype.getTime = (date: any) => {
+        (Vue.prototype.getTime = (date: any) => {
             console.log(date, "wwwwwwwwwwwwwwwwwwwww");
             let data;
             if (date == "" || date == "undefined" || date == null) {
@@ -38,18 +38,32 @@ export default {
             }
             console.log(data);
             return data;
-        },
-        Vue.prototype.time1 = (date:any, fomat:any) => {
-            console.log(date);
-            let data
-            if (date == '' || date == 'undefined' || date == null) {
-              data = 'loading...'
-            } else {
-              //	console.log(data)
-              data =  (new Date(date) as any).Format(fomat || "yyyy-MM-dd");
-            }
-            // console.log(data);
-            return data
-          }
+        }),
+            (Vue.prototype.time1 = (date: any, fomat: any) => {
+                // console.log(date);
+                let data;
+                if (date == "" || date == "undefined" || date == null) {
+                    data = "";
+                } else {
+                    //	console.log(data)
+                    data = (new Date(date) as any).Format(
+                        fomat || "yyyy-MM-dd"
+                    );
+                }
+                // console.log(data);
+                return data;
+            }),
+            (Vue.prototype.objDeepCopy = (source: any) => {
+                //对象深度复制
+                // console.log(Vue.prototype.objDeepCopy,'888888888888888888888888888888');
+                var sourceCopy = source instanceof Array ? [] : {} as any;
+                for (var item in source) {
+                    sourceCopy[item] =
+                        typeof source[item] === "object"
+                            ? Vue.prototype.objDeepCopy(source[item])
+                            : source[item];
+                }
+                return sourceCopy;
+            });
     }
 };
